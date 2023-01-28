@@ -37,9 +37,51 @@ const MORSE_TABLE = {
     '-----':  '0',
 };
 
+
 function decode(expr) {
-    // write your solution here
+    let strToArr = expr.split('');
+    let symbolArr = [];
+
+    while(strToArr.length > 0) {
+        symbolArr.push(strToArr.splice(0, 10));
+    }
+
+    const changeSymbol = symbolArr.map(element => {
+        let arr = [];
+
+        while(element.length > 0) {
+            arr.push(element.splice(0, 2).join(''));
+        } 
+
+        return arr.map(item => {
+            if (item === '10') {
+                return '.'
+            } else if (item === '11') {
+                return '-'
+            } else {
+                return ''
+            }
+        }).join('')
+        
+    });
+
+    const codeToWord = changeSymbol.map(element => {
+        if (element === '') {
+            return " "
+        }
+
+        for (let item in MORSE_TABLE) {
+            if (item === element) {
+                return MORSE_TABLE[item]
+            }
+        }
+
+    })
+
+
+    return codeToWord.join('')
 }
+
 
 module.exports = {
     decode
